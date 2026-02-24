@@ -1,20 +1,16 @@
 import random
 import requests
 
-from src.authentication import get_access_token
-from src.config import EREDE_BASE_URL
-
-
-def authorize():
+def authorize(access_token):
     """Realizar transação do tipo 'Autorização'
 
     Returns:
         _type_: JSON
     """
-    access_token = get_access_token()
+    
 
     response = requests.post(
-        url = f"{EREDE_BASE_URL}/v2/transactions",
+        url = "https://sandbox-erede.useredecloud.com.br/v2/transactions",
 
         headers = {
             "Authorization": f"Bearer {access_token}",
