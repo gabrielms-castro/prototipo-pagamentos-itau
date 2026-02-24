@@ -1,5 +1,6 @@
 import requests
 
+from src.dataclasses.http_methods import HttpMethods
 from src.entities.store import Store
 
 
@@ -8,7 +9,7 @@ class AuthenticationService:
     def __init__(self, store: Store):
         self.store = store
     
-    def send_request(self, method, key: str) -> requests.Response:
+    def send_request(self, method: HttpMethods, key: str) -> requests.Response:
         # key deve ser a concatenação de PV:Token em Base64
         headers = {
             "Authorization": f"Basic {key}",
