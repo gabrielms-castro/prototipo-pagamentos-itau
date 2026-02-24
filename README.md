@@ -1,5 +1,11 @@
 # Itaú Use Rede
 
+Prototipação de uma SDK para a API e.Rede do Itaú.
+
+Foi utilizado o repositório [origial](https://github.com/DevelopersRede/erede-python/tree/master) como inspiração.
+
+Este protótipo é basicamente uma refatoração/atualização com uma versão mais atual do Python e de novas funcionalidades do e.Rede (por exemplo, OAUTH2.0 para autenticação)
+
 ## Sandbox
  * [Cartões](https://developer.userede.com.br/e-rede#tutorial-sandbox-cartoes)
 

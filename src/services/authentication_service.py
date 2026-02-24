@@ -27,7 +27,7 @@ class AuthenticationService:
 
         if response.status_code >= 400:
             error = response.json()
-            raise Exception(error.get("returnMessage", "opz"), error.get("returnCode", 0))
+            raise Exception(error.get("returnMessage", "Requisição falhou"), error.get("returnCode", 0))
 
         return response.json()
 
