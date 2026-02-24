@@ -1,3 +1,4 @@
+from src.services.create_transaction_service import CreateTransactionService
 from src.services.get_transaction_service import GetTransactionService
 from src.dataclasses.http_methods import HttpMethods
 from src.entities.store import Store
@@ -12,6 +13,13 @@ class eRede:
         auth_service = AuthenticationService(self.store)
         response = auth_service.send_request(HttpMethods.POST, self.store.b64_credential)
         return response.get("access_token")
+
+    def create(self, body):
+        """Create a Transaction
+        """
+        create_transaction = CreateTransactionService(self.store)
+        create_transaction.body = body
+        return create_transaction.execute()
 
     def get_by_tid(self, tid):
         """Get a Transaction by its TID
