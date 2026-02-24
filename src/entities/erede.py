@@ -1,4 +1,4 @@
-from dataclasses.http_methods import HttpMethods
+from src.dataclasses.http_methods import HttpMethods
 from src.entities.store import Store
 from src.services.authentication_service import AuthenticationService
 

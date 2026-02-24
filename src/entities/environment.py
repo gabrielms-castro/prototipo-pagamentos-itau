@@ -1,7 +1,7 @@
 from typing import Optional
 
-from src.entities.environment_production import ProductionUrls
-from src.entities.environment_sandbox import SandboxUrls
+from src.dataclasses.environment_production import ProductionUrls
+from src.dataclasses.environment_sandbox import SandboxUrls
 
 
 class Environment:
