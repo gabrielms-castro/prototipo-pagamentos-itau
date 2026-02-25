@@ -1,3 +1,4 @@
+from dataclasses import fields
 import json
 
 from src.dataclasses.transaction_response import TransactionResponse
@@ -144,8 +145,6 @@ class Transaction(BaseModel):
         self.transactionCredentials = None
         self.credentialId = None
 
-        self.response: TransactionResponse | None = None
-    
     def capture_transaction(self, capture: bool) -> None:
         if self.kind == CardTypes.CREDIT:
             self.capture = True
@@ -182,5 +181,15 @@ class Transaction(BaseModel):
 
         return self
 
-    def set_response(self, response: dict):
-        self.response = TransactionResponse.unserialize(response)
+    @staticmethod
+    def unserialize(data: dict):
+
+        if data is None:
+            return {}
+        
+        instance = TransactionResponse()
+
+        for key, value in data.items():
+            setattr(instance, key, value)
+        
+        return instance
