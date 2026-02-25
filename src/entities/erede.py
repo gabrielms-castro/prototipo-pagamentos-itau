@@ -1,3 +1,5 @@
+from src.services.cancel_transactions_service import CancelTransactionService
+from src.services.capture_transaction_service import CaptureTransactionService
 from src.services.create_transaction_service import CreateTransactionService
 from src.services.get_transaction_service import GetTransactionService
 from src.dataclasses.http_methods import HttpMethods
@@ -14,17 +16,27 @@ class eRede:
         response = auth_service.send_request(HttpMethods.POST, self.store.b64_credential)
         return response.get("access_token")
 
-    def create(self, body):
+    def create(self, transaction):
         """Create a Transaction
         """
-        create_transaction = CreateTransactionService(self.store)
-        create_transaction.body = body
+        create_transaction = CreateTransactionService(self.store, transaction)
         return create_transaction.execute()
 
+    def capture(self, transaction):
+        """Capture a Transaction
+        """
+        capture_transaction = CaptureTransactionService(self.store, transaction)
+        return capture_transaction.execute()
+    
+    def cancel(self, transaction):
+        """Cancel a Transaction
+        """
+        cancel_transaction = CancelTransactionService(self.store, transaction)
+        return cancel_transaction.execute()
+    
     def get_by_tid(self, tid):
         """Get a Transaction by its TID
         """
-
         get_transaction = GetTransactionService(self.store)
         get_transaction.tid = tid
         return get_transaction.execute()
@@ -32,7 +44,6 @@ class eRede:
     def get_by_reference(self, reference):
         """Get a Transaction by its reference
         """
-
         get_transaction = GetTransactionService(self.store)
         get_transaction.reference = reference
         return get_transaction.execute()    
