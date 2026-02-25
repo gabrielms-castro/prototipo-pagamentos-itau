@@ -1,32 +1,22 @@
-from dataclasses import dataclass, fields
+from dataclasses import dataclass
+
+from src.models.base_model import BaseModel
 
 
 @dataclass
-class TransactionResponse:
-    reference: str
-    tid: str
-    nsu: str
-    authorizationCode: str
-    brandTid: str
-    transactionLinkId: str
-    dateTime: str
-    amount: int
-    cardBin: str
-    last4: str
-    returnCode: str
-    returnMessage: str
-    links: list[dict[str, str]]
-
-    @classmethod
-    def unserialize(cls, response: dict):
-        if response is None:
-            return {}
+class TransactionResponse(BaseModel):
+    def __init__(self):
+        self.tid = None
+        self.nsu = None
+        self.authorizationCode = None
+        self.brandTid = None
+        self.transactionLinkId = None
+        self.dateTime = None
+        self.amount = None
+        self.cardBin = None
+        self.last4 = None
+        self.returnCode = None
+        self.returnMessage = None
+        self.links = []
+        self.status = None
         
-        known_fields = {f.name for f in fields(cls)}
-        filtered = {}
-        for key, value in response.items():
-            if key in known_fields:
-                filtered[key] = value
-        
-        return cls(**filtered)
-                
