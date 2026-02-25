@@ -4,7 +4,7 @@ import requests
 
 from src.dataclasses.http_methods import HttpMethods
 from src.entities.store import Store
-from src.enums.card import Card
+from src.entities.transaction import Transaction
 
 
 class TransactionService:
@@ -18,7 +18,7 @@ class TransactionService:
     def get_uri(self) -> str:
         return self.store.environment.transactions_endpoint
 
-    def send_request(self, method: HttpMethods, data: Optional[dict[str, Any]] = None) -> requests.Response:
+    def send_request(self, method: HttpMethods, data: Optional[dict[str, Any]] = None) -> Transaction:
         
         url = self.get_uri()
         headers = {
@@ -29,12 +29,11 @@ class TransactionService:
         response = getattr(requests, method)(
             url=url,
             headers=headers,
-            json=data
+            data=data
         )
 
         if response.status_code >= 400:
-            error = response
-            # raise Exception(error.get("returnMessage", "Requisição falhou"), error.get("returnCode", 0))
-            raise Exception(error)
+            raise Exception(response.json())
+        
 
-        return response.json()
+        return Transaction.unserialize(response.json())
