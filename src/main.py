@@ -35,6 +35,7 @@ def main():
 
     transaction_response = erede.create(transaction)
     print(transaction_response.serialize())
+
     if transaction_response.returnCode == "00":
         print("Transação criada com sucesso!")
         query_transaction = erede.get_by_tid(transaction_response.tid)
@@ -44,9 +45,13 @@ def main():
         query_transaction = erede.get_by_tid(transaction_response.tid)
         print(f"\nTransação consultada: {query_transaction.serialize()}")
         
-        erede.cancel(transaction_response)
-        query_transaction = erede.get_by_tid(transaction_response.tid)
-        print(f"\nTransação consultada: {query_transaction.serialize()}")
+    erede.cancel(transaction_response)
+    query_transaction = erede.get_by_tid(transaction_response.tid)
+    print(f"\nTransação consultada: {query_transaction.serialize()}")
+
+    erede.get_refunds(transaction_response.tid)
+    query_transaction = erede.get_by_tid(transaction_response.tid)
+    print(f"\nTransação consultada: {query_transaction.serialize()}")
 
 if __name__ == "__main__":
     main()
