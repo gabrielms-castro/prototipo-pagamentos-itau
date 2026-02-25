@@ -1,5 +1,3 @@
-import requests
-
 from src.dataclasses.http_methods import HttpMethods
 from src.entities.store import Store
 
