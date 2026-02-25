@@ -1,3 +1,6 @@
+from src.enums.card import CardTypes
+
+
 class Card:
     """
     Representa os dados do cartão utilizado em uma transação.
@@ -28,10 +31,11 @@ class Card:
             Tamanho máximo: 4. O envio aumenta a chance de aprovação.
             Exemplo: `"235"`.
     """
-    def __init__(self, cardholderName, cardNumber, expirationMonth, expirationYear, securityCode):
+    
+    def __init__(self, cardholderName, cardNumber, expirationMonth, expirationYear, securityCode, kind: CardTypes):
         self.cardholderName = cardholderName
         self.cardNumber = cardNumber
         self.expirationMonth = expirationMonth
         self.expirationYear = expirationYear
         self.securityCode = securityCode
-        self.kind = None
+        self.kind = kind
