@@ -1,6 +1,3 @@
-from dataclasses import fields
-import json
-
 from src.dataclasses.transaction_response import TransactionResponse
 from src.entities.card import Card
 from src.enums.card import CardTypes
