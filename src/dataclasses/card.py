@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
-from src.enums.card import CardTypes
-from src.models.base_model import BaseModel
+from src.enums import TransactionTypes
 
 @dataclass
 class Card:
@@ -40,4 +39,4 @@ class Card:
     expirationMonth: int
     expirationYear: int
     securityCode: str
-    kind: CardTypes
+    kind: TransactionTypes

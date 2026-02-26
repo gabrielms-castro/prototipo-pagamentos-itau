@@ -1,6 +1,6 @@
 from src.dataclasses.transaction_response import TransactionResponse
 from src.dataclasses.card import Card
-from src.enums.card import CardTypes
+from src.enums import TransactionTypes
 from src.models import BaseModel
 
 
@@ -145,10 +145,10 @@ class Transaction(BaseModel):
         self.pix = None
 
     def capture_transaction(self) -> None:
-        if self.kind not in [CardTypes.CREDIT, CardTypes.DEBIT]:
+        if self.kind not in [TransactionTypes.CREDIT, TransactionTypes.DEBIT]:
             raise ValueError("O tipo da transação deve ser definido como 'credit' ou 'debit' para determinar a captura.")
         
-        if self.kind == CardTypes.CREDIT:
+        if self.kind == TransactionTypes.CREDIT:
             self.capture = False
             return
         
