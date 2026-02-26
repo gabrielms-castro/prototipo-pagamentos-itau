@@ -4,7 +4,7 @@ from src.enums.card import CardTypes
 from src.models.base_model import BaseModel
 
 @dataclass
-class Card(BaseModel):
+class Card:
     """
     Representa os dados do cartão utilizado em uma transação.
 
