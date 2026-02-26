@@ -1,4 +1,6 @@
 from ast import Store
+from datetime import timedelta
+import datetime
 from random import random
 
 from src.config import PV, TOKEN
@@ -78,3 +80,17 @@ class PaymentService:
     print(transaction_response.to_json())
     print()
     print(erede.get_by_tid(transaction_response.tid).to_json())    
+
+
+    # Pix
+    expiration_datetime = datetime.now() + timedelta(hours=2)
+    expiration_datetime_str = expiration_datetime.strftime("%Y-%m-%dT%H:%M:%S")
+    transaction = Transaction(amount, reference)
+    transaction.pix_transaction(expiration_datetime_str) 
+
+    pix_transaction = erede.create(transaction)
+    print("Resposta da transação Pix:", pix_transaction.to_json())
+
+    query_pix_transaction = erede.get_by_tid(pix_transaction.tid)
+    print()
+    print("Consulta da transação Pix:", query_pix_transaction.to_json())

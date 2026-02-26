@@ -22,14 +22,8 @@ def main():
     reference = "g" + str(random.randint(10**(16 - 1), (10**16)-1))
     amount = convert(2000.00)
 
-    # Pix
-    expiration_datetime = datetime.now() + timedelta(hours=2)
-    expiration_datetime_str = expiration_datetime.strftime("%Y-%m-%dT%H:%M:%S")
     transaction = Transaction(amount, reference)
-    transaction.pix_transaction(expiration_datetime_str) 
-
-    response = erede.create(transaction)
-    print("Resposta da transação Pix:", response.to_json())
+    ...
 
 if __name__ == "__main__":
     main()
