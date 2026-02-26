@@ -1,4 +1,5 @@
 import random
+from datetime import datetime, timedelta
 
 from src.dataclasses.http_methods import HttpMethods
 from src.dataclasses.card import Card
@@ -21,26 +22,14 @@ def main():
     reference = "g" + str(random.randint(10**(16 - 1), (10**16)-1))
     amount = convert(2000.00)
 
-
-    #cartão de débito
+    # Pix
+    expiration_datetime = datetime.now() + timedelta(hours=2)
+    expiration_datetime_str = expiration_datetime.strftime("%Y-%m-%dT%H:%M:%S")
     transaction = Transaction(amount, reference)
-    debit_card = Card(
-        cardNumber="5277696455399733",
-        securityCode="123",
-        expirationMonth=1,
-        expirationYear=2035,
-        cardholderName="John Snow",
-        kind=TransactionTypes.DEBIT
-    )
-    
-    transaction.card_transaction(debit_card)
+    transaction.pix_transaction(expiration_datetime_str) 
 
-    print()
-    print(transaction.to_json())
-    transaction_response = erede.create(transaction)
-    print(transaction_response.to_json())
-    print()
-    print(erede.get_by_tid(transaction_response.tid).to_json())    
+    response = erede.create(transaction)
+    print("Resposta da transação Pix:", response.to_json())
 
 if __name__ == "__main__":
     main()

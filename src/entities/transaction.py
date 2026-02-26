@@ -141,8 +141,7 @@ class Transaction(BaseModel):
         self.storageCard = None
         self.transactionCredentials = None
         self.credentialId = None
-
-        self.pix = None
+        self.qrCode = None
 
     def capture_transaction(self) -> None:
         if self.kind not in [TransactionTypes.CREDIT, TransactionTypes.DEBIT]:
@@ -162,8 +161,10 @@ class Transaction(BaseModel):
         self.cardholderName = card.cardholderName
         self.kind = card.kind
 
-    def pix_transaction(self):
-        pass
+    def pix_transaction(self, expiration_datetime: str):
+        self.kind = TransactionTypes.PIX
+        self.qrCode = { "dateTimeExpiration": expiration_datetime }
+
         
     @staticmethod
     def unserialize(data: dict):
