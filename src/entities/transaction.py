@@ -1,5 +1,5 @@
 from src.dataclasses.transaction_response import TransactionResponse
-from src.entities.card import Card
+from src.dataclasses.card import Card
 from src.enums.card import CardTypes
 from src.models import BaseModel
 
@@ -142,42 +142,25 @@ class Transaction(BaseModel):
         self.transactionCredentials = None
         self.credentialId = None
 
+        self.pix = None
+
     def capture_transaction(self, capture: bool) -> None:
         if self.kind == CardTypes.CREDIT:
             self.capture = True
 
         self.capture = capture
 
-    def credit_card(self, card_number, security_code, expiration_month, expiration_year, card_holder_name):
-        return self.card(
-            card_number, 
-            security_code, 
-            expiration_month, 
-            expiration_year, 
-            card_holder_name,
-            CardTypes.CREDIT
-        )
+    def card_transaction(self, card: Card):
+        self.cardNumber = card.cardNumber
+        self.securityCode = card.securityCode
+        self.expirationMonth = card.expirationMonth
+        self.expirationYear = card.expirationYear
+        self.cardholderName = card.cardholderName
+        self.kind = card.kind
 
-    def debit_card(self, card_number, security_code, expiration_month, expiration_year, card_holder_name):
-        return self.card(
-            card_number, 
-            security_code, 
-            expiration_month, 
-            expiration_year, 
-            card_holder_name,
-            CardTypes.DEBIT
-        )
-
-    def card(self, card_number, security_code, expiration_month, expitarion_year, card_holder_name, kind):
-        self.cardNumber = card_number
-        self.securityCode = security_code
-        self.expirationMonth = expiration_month
-        self.expirationYear = expitarion_year
-        self.cardHolderName = card_holder_name
-        self.kind = kind
-
-        return self
-
+    def pix_transaction(self):
+        pass
+        
     @staticmethod
     def unserialize(data: dict):
 
