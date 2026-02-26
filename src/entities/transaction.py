@@ -144,11 +144,15 @@ class Transaction(BaseModel):
 
         self.pix = None
 
-    def capture_transaction(self, capture: bool) -> None:
+    def capture_transaction(self) -> None:
+        if self.kind not in [CardTypes.CREDIT, CardTypes.DEBIT]:
+            raise ValueError("O tipo da transação deve ser definido como 'credit' ou 'debit' para determinar a captura.")
+        
         if self.kind == CardTypes.CREDIT:
-            self.capture = True
-
-        self.capture = capture
+            self.capture = False
+            return
+        
+        self.capture = True
 
     def card_transaction(self, card: Card):
         self.cardNumber = card.cardNumber
