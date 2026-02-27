@@ -1,14 +1,17 @@
-class ThreeDSecure:
-    
-    CONTINUE_ON_FAILURE = "continue"
-    DECLINE_ON_FAILURE = "decline"
+from src.entities import Device
+from src.entities import Billing
+from src.models import BaseModel
 
-    def __init__(self):
-        self.embedded = None
-        self.onFailure = None
-        self.userAgent = None
-        self.ipAdress = None
-        self.device = None
-        self.cardholderName = None
-        self.billing = None
-        self.url = None
+
+class ThreeDSecure(BaseModel):
+    
+    CONTINUE = "continue"
+    DECLINE = "decline"
+
+    def __init__(self, userAgent, ipAddress, device: Device, billing: Billing, onFailure=CONTINUE, embedded=True):
+        self.embedded = embedded
+        self.onFailure = onFailure
+        self.userAgent = userAgent
+        self.ipAddress = ipAddress
+        self.device = device
+        self.billing = billing

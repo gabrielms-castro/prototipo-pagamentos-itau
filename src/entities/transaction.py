@@ -1,5 +1,7 @@
 from src.dataclasses.transaction_response import TransactionResponse
 from src.dataclasses.card import Card
+from src.entities.threeDSecure import ThreeDSecure
+from src.entities.url import Url
 from src.enums import TransactionTypes
 from src.models import BaseModel
 
@@ -39,7 +41,7 @@ class Transaction(BaseModel):
             Se não enviado, será considerado à vista.
             Exemplo: `2`.
 
-        cardholderName (str, optional):
+        cardHolderName (str, optional):
             Nome do portador impresso no cartão.
             Tamanho máximo: 30.
             Exemplo: `"John Snow"`.
@@ -142,6 +144,9 @@ class Transaction(BaseModel):
         self.transactionCredentials = None
         self.credentialId = None
         self.qrCode = None
+        self.threeDSecure = None
+        self.urls = None
+
 
     def capture_transaction(self) -> None:
         if self.kind not in [TransactionTypes.CREDIT, TransactionTypes.DEBIT]:
@@ -165,7 +170,19 @@ class Transaction(BaseModel):
         self.kind = TransactionTypes.PIX
         self.qrCode = { "dateTimeExpiration": expiration_datetime }
 
+    def three_d_secure_transaction(self, three_d_secure_config: ThreeDSecure, urls: list[Url]):
+        if not urls:
+            raise ValueError("Ao menos uma URL de retorno deve ser fornecida para configurar 3D Secure.")
         
+        if self.cardholderName is None:
+            raise ValueError("O nome do portador do cartão deve ser definido para configurar 3D Secure.")
+        
+        if self.kind == TransactionTypes.DEBIT:
+            three_d_secure_config.onFailure = ThreeDSecure.DECLINE
+
+        self.threeDSecure = three_d_secure_config
+        self.urls = urls
+
     @staticmethod
     def unserialize(data: dict):
 

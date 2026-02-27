@@ -1,10 +1,12 @@
-class Billing:
-    def __init__(self):
-        self.address = None
-        self.city = None
-        self.postalCode = None
-        self.state = None
-        self.country = None
-        self.emailAddress = None
-        self.phoneNumber = None
-        
+from src.models import BaseModel
+
+
+class Billing(BaseModel):
+    def __init__(self, address, city, postalcode, state, country, emailAddress, phoneNumber):
+        self.address = address
+        self.city = city
+        self.postalcode = postalcode
+        self.state = state
+        self.country = country
+        self.emailAddress = emailAddress
+        self.phoneNumber = phoneNumber
