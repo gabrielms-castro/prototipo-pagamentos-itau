@@ -25,7 +25,7 @@ def main():
     store.set_access_token(access_token)
 
     reference = "g" + str(random.randint(10**(16 - 1), (10**16)-1))
-    amount = convert(2.09)
+    amount = convert(200)
 
     transaction = Transaction(amount, reference)
 
@@ -66,23 +66,24 @@ def main():
     credit_card = Card(
         cardholderName="John Snow",
         cardNumber="2223000148400010",
-        expirationMonth=12,
-        expirationYear=2028,
-        securityCode="235",  
-        kind=TransactionTypes.CREDIT      
+        expirationMonth=1,
+        expirationYear=2035,
+        securityCode="123",  
+        kind=TransactionTypes.DEBIT      
     )
     
-    transaction.card_transaction(credit_card)
-    transaction.three_d_secure_transaction(three_d_secure_config, urls)
+    # transaction.card_transaction(credit_card)
+    # transaction.three_d_secure_transaction(three_d_secure_config, urls)
 
-    print(transaction.to_json())
+    # print(transaction.to_json())
+    # print()
+
+    # three_d_secure_transaction = erede.create(transaction)
+    # print(three_d_secure_transaction.to_json())
+
     print()
-
-    three_d_secure_transaction = erede.create(transaction)
-    print(three_d_secure_transaction.to_json())
-
-    # query_transaction = erede.get_by_tid("10012602271533459671")
-    # print(query_transaction.to_json())
+    query_transaction = erede.get_by_tid("10012602271646257551")
+    print(query_transaction.to_json())
 
 
 
