@@ -25,7 +25,7 @@ def main():
     store.set_access_token(access_token)
 
     reference = "g" + str(random.randint(10**(16 - 1), (10**16)-1))
-    amount = convert(2000.00)
+    amount = convert(2.09)
 
     transaction = Transaction(amount, reference)
 
@@ -75,8 +75,16 @@ def main():
     transaction.card_transaction(credit_card)
     transaction.three_d_secure_transaction(three_d_secure_config, urls)
 
+    print(transaction.to_json())
+    print()
+
     three_d_secure_transaction = erede.create(transaction)
     print(three_d_secure_transaction.to_json())
+
+    # query_transaction = erede.get_by_tid("10012602271533459671")
+    # print(query_transaction.to_json())
+
+
 
 if __name__ == "__main__":
     main()
