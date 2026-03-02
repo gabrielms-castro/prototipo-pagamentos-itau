@@ -11,14 +11,15 @@ from src.entities import Environment
 from src.entities import eRede
 from src.entities import Store
 
-from src.config import PV, TOKEN
+from src.config import Settings
 from src.enums.transation_types import TransactionTypes
 from src.enums.url_type import UrlType
 from src.utils import convert
 
 
 def main():
-    store = Store(PV, TOKEN, Environment.sandbox())
+    settings = Settings()
+    store = Store(settings.PV, settings.TOKEN, Environment.sandbox())
     erede = eRede(store)
 
     access_token = erede.get_access_token()

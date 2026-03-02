@@ -1,4 +1,11 @@
-from decouple import config
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-PV = config("PV")
-TOKEN = config("TOKEN")
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file='.env',
+        env_file_encoding='utf-8',
+    )
+
+    PV: str
+    TOKEN: str
